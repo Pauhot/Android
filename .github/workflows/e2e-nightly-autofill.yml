@@ -60,18 +60,6 @@ jobs:
           api-key: ${{ secrets.MOBILE_DEV_API_KEY }}
           name: ${{ github.sha }}
           app-file: apk/release.apk
-          android-api-level: 33
+          android-api-level: 34
           workspace: .maestro
           include-tags: autofillNoAuthTests
-
-      - name: Create Asana task when workflow failed
-        if: ${{ failure() }}
-        id: create-failure-task
-        uses: duckduckgo/native-github-asana-sync@v1.1
-        with:
-          asana-pat: ${{ secrets.GH_ASANA_SECRET }}
-          asana-project: ${{ vars.GH_ANDROID_APP_PROJECT_ID }}
-          asana-section: ${{ vars.GH_ANDROID_APP_INCOMING_SECTION_ID }}
-          asana-task-name: GH Workflow Failure - Autofill Critical Path E2E Flows
-          asana-task-description: Autofill critical path tests have failed. See https://github.com/duckduckgo/Android/actions/runs/${{ github.run_id }}
-          action: 'create-asana-task'
